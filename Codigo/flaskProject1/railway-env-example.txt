@@ -1,0 +1,28 @@
+# Arquivo de exemplo das variáveis de ambiente para Railway
+# Use este arquivo como referência para configurar as variáveis no Railway
+
+# Flask Configuration
+SECRET_KEY=chave_secreta_muito_segura_producao
+JWT_SECRET_KEY=chave_jwt_secreta_muito_segura_producao
+
+# Database Configuration (Railway MySQL)
+# Essas serão geradas automaticamente pelo Railway quando você adicionar MySQL
+DB_USER=root
+DB_PASSWORD=railway_generated_password
+DB_HOST=containers-us-west-xx.railway.app
+DB_PORT=3306
+DB_NAME=railway
+SQLALCHEMY_DATABASE_URI=mysql://user:password@host:port/database
+
+# MongoDB (seu cluster já existente)
+MONGO_URI=mongodb+srv://desenvolvimento_tis4:tis4@cluster0.ouioq2s.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+MONGO_DB_NAME=Tis4
+
+# SMTP Configuration (Configure se necessário)
+SMTP_SERVER=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USERNAME=seu_email@gmail.com
+SMTP_PASSWORD=sua_senha_app
+
+# Railway Configuration
+PORT=8080 
