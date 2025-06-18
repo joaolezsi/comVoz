@@ -1,0 +1,10 @@
+@if (shouldShowSidebar()) {
+    <app-with-sidebar-layout></app-with-sidebar-layout>
+  } @else {
+    <app-without-sidebar-layout></app-without-sidebar-layout>
+  }
+
+<router-outlet></router-outlet>
+
+<!-- Componente de notificações global -->
+<app-notification></app-notification>

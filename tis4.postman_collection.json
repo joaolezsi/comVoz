@@ -1,0 +1,1032 @@
+{
+	"info": {
+		"_postman_id": "ed2f28d0-4ff5-40c0-8397-3752fcf2e6d9",
+		"name": "tis4",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33194528",
+		"_collection_link": "https://gmon-api.postman.co/workspace/TIS-4~fe5bbdf2-28a6-4aac-bdc6-76cb107cf7b6/collection/33194528-ed2f28d0-4ff5-40c0-8397-3752fcf2e6d9?action=share&source=collection_link&creator=33194528"
+	},
+	"item": [
+		{
+			"name": "Login/Registros",
+			"item": [
+				{
+					"name": "criar usuario",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome_completo\": \"João Silva\",\r\n    \"email\": \"joao.silva@empresa.com\",\r\n    \"password\": \"senha123\",\r\n    \"passwordRepeat\": \"senha123\",\r\n    \"telefone\": \"(11) 99999-9999\",\r\n    \"empresa\": \"Empresa XYZ\",\r\n    \"cargo\": \"Gerente\",\r\n    \"cnpj\": \"12.345.678/0001-90\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8080/usuarios/resgistrar",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"usuarios",
+								"resgistrar"
+							]
+						},
+						"description": "### Register User\n\nThis endpoint allows you to register a new user.\n\n#### Request Body\n\n- `nome` (string) : The name of the user.\n    \n- `email` (string) : The email address of the user.\n    \n- `password` (string) : The password for the user account.\n    \n- `passwordRepeat` (string) : The repeated password for confirmation.\n    \n- `telefone` (string) : The phone number of the user.\n    \n- `empresa` (string) : The company name of the user.\n    \n- `cargo` (string) : The job title or position of the user.\n    \n- `cnpj` (string) : The company registration number of the user.\n    \n\n#### Response\n\nThe response will contain the status of the registration process."
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "Admin@123",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "pedromaximocc@gmail.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8080/usuarios/login",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"usuarios",
+								"login"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Login",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:8080/usuarios/login",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8080",
+									"path": [
+										"usuarios",
+										"login"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "Login teste",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "Teste@123",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "teste@comvoz.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8080/usuarios/login",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"usuarios",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obter Perfil",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0ODQ2ODIzMywianRpIjoiN2Q5MDcyNWQtNWVmMC00N2M3LTkyNGYtM2ZmODc3NzYxNDM3IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjEiLCJuYmYiOjE3NDg0NjgyMzMsImNzcmYiOiIzZDcyNDg1Yi0zM2EyLTRiODgtOTM3Ny1iZTNjNzFkZDRiM2IiLCJleHAiOjE3NDg1NTQ2MzMsImlzX2FkbWluIjp0cnVlLCJlbWFpbCI6InBlZHJvbWF4aW1vY2NAZ21haWwuY29tIiwibm9tZSI6IlBlZHJvIE1heGltbyJ9.PyHSgnZvXy6DzO-uS9cZT3q3_1FqeoqckD24hFOQyxw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8080/usuarios/perfil",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"usuarios",
+								"perfil"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar Perfil",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0ODQ2ODIzMywianRpIjoiN2Q5MDcyNWQtNWVmMC00N2M3LTkyNGYtM2ZmODc3NzYxNDM3IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjEiLCJuYmYiOjE3NDg0NjgyMzMsImNzcmYiOiIzZDcyNDg1Yi0zM2EyLTRiODgtOTM3Ny1iZTNjNzFkZDRiM2IiLCJleHAiOjE3NDg1NTQ2MzMsImlzX2FkbWluIjp0cnVlLCJlbWFpbCI6InBlZHJvbWF4aW1vY2NAZ21haWwuY29tIiwibm9tZSI6IlBlZHJvIE1heGltbyJ9.PyHSgnZvXy6DzO-uS9cZT3q3_1FqeoqckD24hFOQyxw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome_completo\": \"Pedro Máximo Silva\",\r\n    \"telefone\": \"(11) 98888-7777\",\r\n    \"empresa\": \"ComVoz Tecnologia\",\r\n    \"cargo\": \"CEO\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8080/usuarios/perfil",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"usuarios",
+								"perfil"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Planos",
+			"item": [
+				{
+					"name": "Contratar Plano",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0Nzg0MTQzNiwianRpIjoiYjNhNmYzOGUtZWNiYy00NTNhLThmNTgtZDRiZDc5MTc3NGI2IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjEiLCJuYmYiOjE3NDc4NDE0MzYsImNzcmYiOiI5ZWYxNzdkYy0xNTUyLTQ2OGItODRkOS02ZTRkYTY1NzQ5NDMiLCJleHAiOjE3NDc5Mjc4MzYsImlzX2FkbWluIjp0cnVlLCJlbWFpbCI6InBlZHJvbWF4aW1vY2NAZ21haWwuY29tIiwibm9tZSI6IlBlZHJvIE1heGltbyJ9.Rhl-vy1aYrFRk5PQ6zNXBSMJwBTVcYck_GAcOLPpLOw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"plan_id\": 2,  // ID do plano pago\r\n    \"user_id\": 2,   // ID do usuário\r\n    \"interest_id\": 1  // ID do interesse criado para contratacao \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8080/plans/subscribe_plan",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"plans",
+								"subscribe_plan"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Plano by id",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Basic\",\r\n    \"limite_pesquisas\": 6,\r\n    \"preco\": 30.90,\r\n    \"descricao\": \"Plano básico com limite de 6 pesquisas\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8080/plans/update_plan/2",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"plans",
+								"update_plan",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all planos",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0NjkxOTYwNiwianRpIjoiNTJhY2I1YTQtMGViNS00NjM5LWJmZDUtYjVjZmI0M2NlZTZjIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjIiLCJuYmYiOjE3NDY5MTk2MDYsImNzcmYiOiJlMTg4NzJkMy1iNzY1LTRiNDgtOTBhZS00OWM0N2RlNzZiYTgiLCJleHAiOjE3NDY5MjA1MDZ9.Z1-T3WUxoK_lIFPQH2h8kDbuF8wrPpIDXh5yMv3zwU0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8080/plans",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"plans"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get plano by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8080/plan/2",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"plan",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Questoes",
+			"item": [
+				{
+					"name": "criar questoes personalizadas",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"user_id\": 1,\r\n  \"questoes\": [\r\n    {\r\n      \"texto\": \"Qual sua cor favorita?\",\r\n      \"tipo\": 1,\r\n      \"opcoes\": [\r\n        {\"texto\": \"Azul\"},\r\n        {\"texto\": \"Vermelho\"},\r\n        {\"texto\": \"Verde\"},\r\n        {\"texto\": \"Amarelo\"}\r\n      ]\r\n    },\r\n    {\r\n      \"texto\": \"Qual sua satisfação com o serviço?\",\r\n      \"tipo\": 2\r\n    },\r\n    {\r\n      \"texto\": \"Descreva sua experiência com o produto:\",\r\n      \"tipo\": 3\r\n    },\r\n    {\r\n      \"texto\": \"Qual seu gênero?\",\r\n      \"tipo\": 1,\r\n      \"opcoes\": [\r\n        {\"texto\": \"Masculino\"},\r\n        {\"texto\": \"Feminino\"},\r\n        {\"texto\": \"Outro\"},\r\n        {\"texto\": \"Prefiro não informar\"}\r\n      ]\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8080/criar_questoes",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"criar_questoes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get todas questoes",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0Nzg0MTU5OCwianRpIjoiNjU0MTlmYWItYzczYS00OGUyLTgzNjktMWE1ZjdjNmY3NDk1IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjIiLCJuYmYiOjE3NDc4NDE1OTgsImNzcmYiOiIwMzg5YWY2Ni04NmI0LTQ4MmEtOWQ4Ny03YjVkMzc2NTI4NzUiLCJleHAiOjE3NDc5Mjc5OTgsImlzX2FkbWluIjp0cnVlLCJlbWFpbCI6InRlc3RlQGNvbXZvei5jb20iLCJub21lIjoiVXN1XHUwMGUxcmlvIFRlc3RlIn0.Ua00L1ktmMMunQ8-GuzigFRsbg0gOVOfSTjxpXR8vyI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8080/get_questoes/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"get_questoes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Pesquisas",
+			"item": [
+				{
+					"name": "Criar Pesquisa",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0Nzg0MTU5OCwianRpIjoiNjU0MTlmYWItYzczYS00OGUyLTgzNjktMWE1ZjdjNmY3NDk1IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjIiLCJuYmYiOjE3NDc4NDE1OTgsImNzcmYiOiIwMzg5YWY2Ni04NmI0LTQ4MmEtOWQ4Ny03YjVkMzc2NTI4NzUiLCJleHAiOjE3NDc5Mjc5OTgsImlzX2FkbWluIjp0cnVlLCJlbWFpbCI6InRlc3RlQGNvbXZvei5jb20iLCJub21lIjoiVXN1XHUwMGUxcmlvIFRlc3RlIn0.Ua00L1ktmMMunQ8-GuzigFRsbg0gOVOfSTjxpXR8vyI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"titulo\": \"Pesquisa de Satisfação do Cliente\",\r\n    \"descricao\": \"Avalie sua experiência com nossos serviços\",\r\n    \"perguntas\": [1, 2 ],  // IDs das questões que você já criou\r\n    \"user_id\": 2,  // ID do usuário que está criando a pesquisa\r\n    \"cnpj\": \"11111111111111\"  // CNPJ da empresa\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8080/criar_pesquisa",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"criar_pesquisa"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all pesquisas",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0NzI0MjI2OCwianRpIjoiNDk1MmEwNjQtOWFhMS00ODIwLTkwZDYtZGJhZWNjODY4MjE4IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjEiLCJuYmYiOjE3NDcyNDIyNjgsImNzcmYiOiIxNTc0MGIwZC02NWNkLTRhMTctOGU5Yi1mMTFjNzc5YmFlYzYiLCJleHAiOjE3NDcyNDMxNjgsImlzX2FkbWluIjp0cnVlLCJlbWFpbCI6InBlZHJvbWF4aW1vY2NAZ21haWwuY29tIiwibm9tZSI6IlBlZHJvIE1heGltbyJ9.sgYxkwNMtfsue2U1rczu2ywzWNJXnPjDahiJcBx-pfA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8080/pesquisas",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"pesquisas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get pesquisa by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0NzI0MjI2OCwianRpIjoiNDk1MmEwNjQtOWFhMS00ODIwLTkwZDYtZGJhZWNjODY4MjE4IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjEiLCJuYmYiOjE3NDcyNDIyNjgsImNzcmYiOiIxNTc0MGIwZC02NWNkLTRhMTctOGU5Yi1mMTFjNzc5YmFlYzYiLCJleHAiOjE3NDcyNDMxNjgsImlzX2FkbWluIjp0cnVlLCJlbWFpbCI6InBlZHJvbWF4aW1vY2NAZ21haWwuY29tIiwibm9tZSI6IlBlZHJvIE1heGltbyJ9.sgYxkwNMtfsue2U1rczu2ywzWNJXnPjDahiJcBx-pfA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8080/pesquisas/682df8d87d77f7af456ac91a",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"pesquisas",
+								"682df8d87d77f7af456ac91a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Desativar pesquisa",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0NTk1OTkyNSwianRpIjoiMzdmMmEwNzctM2Y4Yy00ZmM0LTkyNDEtMTk4ZGJjMmU3Y2VhIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjEiLCJuYmYiOjE3NDU5NTk5MjUsImNzcmYiOiJlNmM1ODdlZC0yZmM3LTQxOTktODMyZS05NmUxN2VlOTIzYjgiLCJleHAiOjE3NDU5NjA4MjV9.8FXJYZgbhBfXYwrpVCCqGU-dttSLNylwgN2kgDMX9qw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8080/pesquisas/6810f1530cb876844ce180f7/desativar",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"pesquisas",
+								"6810f1530cb876844ce180f7",
+								"desativar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update pesquisas",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0NTk1OTkyNSwianRpIjoiMzdmMmEwNzctM2Y4Yy00ZmM0LTkyNDEtMTk4ZGJjMmU3Y2VhIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjEiLCJuYmYiOjE3NDU5NTk5MjUsImNzcmYiOiJlNmM1ODdlZC0yZmM3LTQxOTktODMyZS05NmUxN2VlOTIzYjgiLCJleHAiOjE3NDU5NjA4MjV9.8FXJYZgbhBfXYwrpVCCqGU-dttSLNylwgN2kgDMX9qw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"perguntas\" : [1,2,3,4]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8080/pesquisas/6810f1530cb876844ce180f7",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"pesquisas",
+								"6810f1530cb876844ce180f7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "envio de pesquisa",
+					"request": {
+						"method": "POST",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "enviar pesquisas por email dos clientes",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0NzgzOTgzMiwianRpIjoiOWZiYjc2OTYtOWRiZC00Y2JmLTkxN2QtZWE4YjYzZmNhOTU0IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjIiLCJuYmYiOjE3NDc4Mzk4MzIsImNzcmYiOiIyZDE4NjM1YS1hZjg4LTQ0MjEtYTRiMi1mZjM3ZDMwNjg3MzEiLCJleHAiOjE3NDc4NDA3MzIsImlzX2FkbWluIjp0cnVlLCJlbWFpbCI6InRlc3RlQGNvbXZvei5jb20iLCJub21lIjoiVXN1XHUwMGUxcmlvIFRlc3RlIn0.dx0IjGFzKZf9viuXzVKjhNNF_ShytE-G2xbpxSM4ZUg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8080/pesquisas/enviar_pesquisa/682deb61c6573ffca00f2f60",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"pesquisas",
+								"enviar_pesquisa",
+								"682deb61c6573ffca00f2f60"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Contatos",
+			"item": [
+				{
+					"name": "importacao de contato por excel",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0NzgzOTgzMiwianRpIjoiOWZiYjc2OTYtOWRiZC00Y2JmLTkxN2QtZWE4YjYzZmNhOTU0IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjIiLCJuYmYiOjE3NDc4Mzk4MzIsImNzcmYiOiIyZDE4NjM1YS1hZjg4LTQ0MjEtYTRiMi1mZjM3ZDMwNjg3MzEiLCJleHAiOjE3NDc4NDA3MzIsImlzX2FkbWluIjp0cnVlLCJlbWFpbCI6InRlc3RlQGNvbXZvei5jb20iLCJub21lIjoiVXN1XHUwMGUxcmlvIFRlc3RlIn0.dx0IjGFzKZf9viuXzVKjhNNF_ShytE-G2xbpxSM4ZUg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/Usuario/Downloads/contatos_1.csv"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8080/contatos/by_excel",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"contatos",
+								"by_excel"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Criar contato by list",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0NzI0NzgzMSwianRpIjoiNjI5NTgwZmUtNDViMS00Njk1LWE3MzMtMzRhNDZkY2MyM2VkIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjIiLCJuYmYiOjE3NDcyNDc4MzEsImNzcmYiOiJkYjQ0NDcwZC05MjVlLTRjZGYtOGFiNi0wZDU1ZjNjNWJjZjUiLCJleHAiOjE3NDcyNDg3MzEsImlzX2FkbWluIjp0cnVlLCJlbWFpbCI6InRlc3RlQGNvbXZvei5jb20iLCJub21lIjoiVXN1XHUwMGUxcmlvIFRlc3RlIn0.HK2F4X-jhJnI-07KzYXHfmQDGxpPtgsje9tDVCMlI9M",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"pedro\",\r\n    \"email\": \"pedromaximo@gmail.com\",\r\n    \"telefone\":  \"31994877677\" \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8080/contatos",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"contatos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get contatos by user_id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0NzI1MTY2OCwianRpIjoiY2NlY2Y1MzgtNzk3Ni00ZWQwLTk0ZjMtZTkwYTM1MjZmNWFlIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjIiLCJuYmYiOjE3NDcyNTE2NjgsImNzcmYiOiJhMzE2MjkyMC1iMWYyLTQwYmQtOTRkNS1mZjgzNjk3ZmU1MTEiLCJleHAiOjE3NDcyNTI1NjgsImlzX2FkbWluIjp0cnVlLCJlbWFpbCI6InRlc3RlQGNvbXZvei5jb20iLCJub21lIjoiVXN1XHUwMGUxcmlvIFRlc3RlIn0.xAHVj3YQHEU5oIvuI4ePWc7rB9qk20Ax-62lOBaAIPM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8080/contatos",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"contatos"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Interesse de compra",
+			"item": [
+				{
+					"name": "criar interesse de compra",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0Nzg0MTU5OCwianRpIjoiNjU0MTlmYWItYzczYS00OGUyLTgzNjktMWE1ZjdjNmY3NDk1IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjIiLCJuYmYiOjE3NDc4NDE1OTgsImNzcmYiOiIwMzg5YWY2Ni04NmI0LTQ4MmEtOWQ4Ny03YjVkMzc2NTI4NzUiLCJleHAiOjE3NDc5Mjc5OTgsImlzX2FkbWluIjp0cnVlLCJlbWFpbCI6InRlc3RlQGNvbXZvei5jb20iLCJub21lIjoiVXN1XHUwMGUxcmlvIFRlc3RlIn0.Ua00L1ktmMMunQ8-GuzigFRsbg0gOVOfSTjxpXR8vyI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"plan_id\": 3,\r\n    \"user_id\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8080/plans/registrar_interesse",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"plans",
+								"registrar_interesse"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all interesses",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0Nzg0MTQzNiwianRpIjoiYjNhNmYzOGUtZWNiYy00NTNhLThmNTgtZDRiZDc5MTc3NGI2IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjEiLCJuYmYiOjE3NDc4NDE0MzYsImNzcmYiOiI5ZWYxNzdkYy0xNTUyLTQ2OGItODRkOS02ZTRkYTY1NzQ5NDMiLCJleHAiOjE3NDc5Mjc4MzYsImlzX2FkbWluIjp0cnVlLCJlbWFpbCI6InBlZHJvbWF4aW1vY2NAZ21haWwuY29tIiwibm9tZSI6IlBlZHJvIE1heGltbyJ9.Rhl-vy1aYrFRk5PQ6zNXBSMJwBTVcYck_GAcOLPpLOw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/Usuario/Downloads/contatos.csv",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8080/plans/get_all_interesses",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"plans",
+								"get_all_interesses"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Respostas",
+			"item": [
+				{
+					"name": "Responder pesquisa",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0NzI0MjI2OCwianRpIjoiNDk1MmEwNjQtOWFhMS00ODIwLTkwZDYtZGJhZWNjODY4MjE4IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjEiLCJuYmYiOjE3NDcyNDIyNjgsImNzcmYiOiIxNTc0MGIwZC02NWNkLTRhMTctOGU5Yi1mMTFjNzc5YmFlYzYiLCJleHAiOjE3NDcyNDMxNjgsImlzX2FkbWluIjp0cnVlLCJlbWFpbCI6InBlZHJvbWF4aW1vY2NAZ21haWwuY29tIiwibm9tZSI6IlBlZHJvIE1heGltbyJ9.sgYxkwNMtfsue2U1rczu2ywzWNJXnPjDahiJcBx-pfA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"respostas\": [\r\n    {\r\n      \"pergunta_id\": 1,\r\n      \"resposta\": 10,\r\n      \"tipo_pergunta\": \"nps\"\r\n    },\r\n    {\r\n      \"pergunta_id\": 7,\r\n      \"resposta\": 10,\r\n      \"tipo_pergunta\": \"nps\"\r\n    },\r\n    {\r\n      \"pergunta_id\": 11,\r\n      \"resposta\": 10,\r\n      \"tipo_pergunta\": \"nps\"\r\n    },\r\n    {\r\n      \"pergunta_id\": 12,\r\n      \"resposta\": 10,\r\n      \"tipo_pergunta\": \"nps\"\r\n    },\r\n    {\r\n      \"pergunta_id\": 13,\r\n      \"resposta\": 10,\r\n      \"tipo_pergunta\": \"nps\"\r\n    },\r\n    {\r\n      \"pergunta_id\": 14,\r\n      \"resposta\": 10,\r\n      \"tipo_pergunta\": \"nps\"\r\n    }\r\n  ],\r\n  \"nome\": \"Tis5\",\r\n  \"email\": \"Tis5@gmail.com\",\r\n  \"pesquisa_id\": \"6830bd023627b13833af0b24\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8080/responder",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"responder"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Dashboards e Relatorios",
+			"item": [
+				{
+					"name": "get_dashbord_principal",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0ODQ2ODIzMywianRpIjoiN2Q5MDcyNWQtNWVmMC00N2M3LTkyNGYtM2ZmODc3NzYxNDM3IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjEiLCJuYmYiOjE3NDg0NjgyMzMsImNzcmYiOiIzZDcyNDg1Yi0zM2EyLTRiODgtOTM3Ny1iZTNjNzFkZDRiM2IiLCJleHAiOjE3NDg1NTQ2MzMsImlzX2FkbWluIjp0cnVlLCJlbWFpbCI6InBlZHJvbWF4aW1vY2NAZ21haWwuY29tIiwibm9tZSI6IlBlZHJvIE1heGltbyJ9.PyHSgnZvXy6DzO-uS9cZT3q3_1FqeoqckD24hFOQyxw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8080/dashboard",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"dashboard"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get_relatorio_by_pesquisa_id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0ODQ2ODQ4MywianRpIjoiNWIyZDlmNzUtYmNhOC00MDM3LTg1MGYtMjgxMWE5OTU0ZjMzIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjEiLCJuYmYiOjE3NDg0Njg0ODMsImNzcmYiOiI4NGVlZTBlZi1iODRhLTRiZjctYmM5Yy0xMDQ3ODFmZThjM2UiLCJleHAiOjE3NDg1NTQ4ODMsImlzX2FkbWluIjp0cnVlLCJlbWFpbCI6InBlZHJvbWF4aW1vY2NAZ21haWwuY29tIiwibm9tZSI6IlBlZHJvIE1heGltbyJ9.EgLxaMxtLYtBMf6ZjewbVqslMfHxFWDVT8INsznIYFY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8080/relatorio/6830bd023627b13833af0b24",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"relatorio",
+								"6830bd023627b13833af0b24"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

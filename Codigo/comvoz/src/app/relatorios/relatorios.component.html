@@ -1,0 +1,121 @@
+<div class="main-container">
+  <!-- Sidebar -->
+  <app-sidebar></app-sidebar>
+
+  <!-- Conteúdo principal -->
+  <div class="content-container">
+    <div class="container">
+      <!-- Cabeçalho -->
+      <div class="header">
+        <div class="header-left">
+          <button class="btn-voltar" (click)="voltarParaPesquisas()">
+            <i class="material-icons">arrow_back</i>
+            Voltar
+          </button>
+          <h1 *ngIf="estatisticas">{{ estatisticas.titulo }}</h1>
+          <h1 *ngIf="!estatisticas && !erro">Carregando relatório...</h1>
+        </div>
+        <div class="header-right">
+          <div class="acoes">
+            <button class="btn-exportar" (click)="exportarPDF()" [disabled]="carregando || !estatisticas">
+              <i class="material-icons">picture_as_pdf</i>
+              PDF
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mensagem de erro -->
+      <div class="error-message" *ngIf="erro">
+        <div class="alert alert-danger">
+          <i class="material-icons">error</i>
+          {{ erro }}
+        </div>
+      </div>
+
+      <!-- Loading -->
+      <div *ngIf="carregando" class="loading">
+        <div class="spinner"></div>
+        <p>Carregando informações...</p>
+      </div>
+
+      <!-- Conteúdo do relatório -->
+      <div class="relatorio-content" *ngIf="estatisticas && !carregando">
+        <!-- Resumo -->
+        <div class="resumo-section">
+          <div class="stats-row">
+            <div class="stat-card">
+              <div class="stat-icon">
+                <i class="material-icons">question_answer</i>
+              </div>
+              <div class="stat-content">
+                <h3>Respostas</h3>
+                <p class="stat-value">{{ estatisticas.respostas }}</p>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon">
+                <i class="material-icons">trending_up</i>
+              </div>
+              <div class="stat-content">
+                <h3>Taxa de Conversão</h3>
+                <p class="stat-value">{{ estatisticas.taxaConversao }}%</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Detalhamento das respostas -->
+        <div class="detalhamento-section">
+          <h2>Detalhamento por Questão</h2>
+
+          <div class="sem-dados" *ngIf="!estatisticas.respostasPorAlternativa || estatisticas.respostasPorAlternativa.length === 0">
+            <p>Não há dados detalhados disponíveis para esta pesquisa.</p>
+          </div>
+
+          <div class="questoes-list" *ngIf="estatisticas.respostasPorAlternativa && estatisticas.respostasPorAlternativa.length > 0">
+            <div class="questao-item" *ngFor="let pergunta of estatisticas.respostasPorAlternativa; let i = index">
+              <div class="questao-header" (click)="navegarParaDetalhes(pergunta.id)">
+                <h3>{{ pergunta.texto }}</h3>
+                <div class="questao-stats">
+                  <span>{{ pergunta.total_respostas }} respostas</span>
+                  <i class="material-icons">chevron_right</i>
+                </div>
+              </div>
+              
+              <div class="alternativas-chart">
+                <div class="chart-bar" *ngFor="let alt of pergunta.alternativas">
+                  <div class="bar-label">{{ alt.texto }}</div>
+                  <div class="bar-container">
+                    <div class="bar" [style.width.%]="alt.porcentagem"></div>
+                    <span class="bar-value">{{ alt.porcentagem }}%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Distribuição das respostas -->
+        <div class="distribuicao-section" *ngIf="estatisticas.distribuicaoRespostas && estatisticas.distribuicaoRespostas.length > 0">
+          <h2>Distribuição das Respostas</h2>
+          <div class="distribuicao-chart">
+            <!-- Aqui seria inserido um componente de gráfico -->
+            <div class="chart-placeholder">
+              <p>Gráfico de distribuição de respostas ao longo do tempo</p>
+              <div class="mock-chart">
+                <div class="chart-day" *ngFor="let item of estatisticas.distribuicaoRespostas">
+                  <div class="chart-column" [style.height.%]="(item.valor / getMaxDistribuicao()) * 100">
+                    <span class="column-value">{{ item.valor }}</span>
+                  </div>
+                  <span class="day-label">{{ item.data }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

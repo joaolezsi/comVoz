@@ -1,0 +1,127 @@
+<div class="main-container">
+  <!-- Loading Overlay -->
+  <div *ngIf="enviandoPesquisa" class="loading-overlay">
+    <div class="loading-spinner"></div>
+    <span class="loading-text">Enviando pesquisa...</span>
+  </div>
+
+  <!-- Sidebar -->
+  <app-sidebar (itemSelected)="onSidebarItemSelected($event)"></app-sidebar>
+
+  <!-- Conteúdo principal -->
+  <div class="content-container">
+    <div class="container">
+      <div class="header">
+        <h1>Minhas Pesquisas</h1>
+        <div class="plano-info">
+          <div class="plano-card">
+            <i class="material-icons">card_membership</i>
+            <div class="plano-details">
+              <span class="plano-nome" *ngIf="!carregandoPlano">{{ plano?.nome || 'Plano não definido' }}</span>
+              <span class="plano-nome" *ngIf="carregandoPlano">Carregando...</span>
+              <div class="plano-limites">
+                <span class="limite-item">
+                  <i class="material-icons">assessment</i>
+                  Total de pesquisas: {{ !carregandoPlano ? (plano?.limite_pesquisas || 0) : '...' }}
+                </span>
+                <span class="limite-item" [class.baixo]="pesquisasRestantes <= 2">
+                  <i class="material-icons">warning</i>
+                  Pesquisas restantes: {{ !carregandoPlano ? pesquisasRestantes : '...' }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Search and Filters Section -->
+      <div class="search-filters-section">
+        <div class="search-container">
+          <i class="material-icons">search</i>
+          <input 
+            type="text" 
+            [(ngModel)]="termoBusca" 
+            (ngModelChange)="onBuscaChange()"
+            placeholder="Buscar pesquisas...">
+        </div>
+        <div class="filtros">
+          <button class="filtro-button" [class.active]="filtroAtivo === null" (click)="filtrarPesquisas(null)">
+            Todas
+          </button>
+          <button class="filtro-button" [class.active]="filtroAtivo === true" (click)="filtrarPesquisas(true)">
+            Ativas
+          </button>
+          <button class="filtro-button" [class.active]="filtroAtivo === false" (click)="filtrarPesquisas(false)">
+            Inativas
+          </button>
+        </div>
+      </div>
+
+      <div *ngIf="pesquisasFiltradas.length === 0" class="sem-pesquisas">
+        <div class="empty-state">
+          <i class="material-icons">search_off</i>
+          <h3>Nenhuma pesquisa encontrada</h3>
+          <p *ngIf="termoBusca || filtroAtivo !== null">Tente ajustar sua busca ou filtros</p>
+          <p *ngIf="!termoBusca && filtroAtivo === null">Clique no botão "Nova Pesquisa" para começar</p>
+        </div>
+      </div>
+
+      <div class="lista-pesquisas" *ngIf="pesquisasFiltradas.length > 0">
+        <div class="pesquisa" *ngFor="let pesquisa of pesquisasFiltradas">
+          <div class="pesquisa-content">
+            <div class="pesquisa-header">
+              <h3>{{ pesquisa.titulo }}</h3>
+              <span class="status-badge" [class.ativa]="pesquisa.ativo">
+                {{ pesquisa.ativo ? 'Ativa' : 'Inativa' }}
+              </span>
+            </div>
+            <p class="descricao">{{ pesquisa.descricao }}</p>
+            <div class="pesquisa-info">
+              <div class="info-group">
+                <span class="info-item">
+                  <i class="material-icons">event</i>
+                  Criada em {{ formatarData(pesquisa.data_criacao) }}
+                </span>
+                <span class="info-item">
+                  <i class="material-icons">help_outline</i>
+                  {{ pesquisa.perguntas.length }} perguntas
+                </span>
+              </div>
+              <div class="actions-group">
+                <button class="acao-button gerar-link" (click)="gerarLinkPesquisa(pesquisa._id)" [disabled]="!pesquisa.ativo">
+                  <i class="material-icons">link</i>
+                  Gerar Link
+                </button>
+                <button class="acao-button enviar" (click)="enviarPesquisa(pesquisa._id)" [disabled]="!pesquisa.ativo">
+                  <i class="material-icons">send</i>
+                  Enviar Pesquisa
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="pesquisa-acoes">
+            <button class="acao-button" [class.ativar]="!pesquisa.ativo" (click)="alternarStatusPesquisa(pesquisa)">
+              <i class="material-icons">{{ pesquisa.ativo ? 'block' : 'check_circle' }}</i>
+              {{ pesquisa.ativo ? 'Desativar' : 'Ativar' }}
+            </button>
+            <button class="acao-button">
+              <i class="material-icons">edit</i>
+              Editar
+            </button>
+            <button class="acao-button" (click)="verRelatorio(pesquisa._id)">
+              <i class="material-icons">assessment</i>
+              Relatório
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="acoes">
+        <button class="nova-pesquisa-button" (click)="criarNovaPesquisa()">
+          <i class="material-icons">add_circle</i>
+          Nova Pesquisa
+        </button>
+      </div>
+    </div>
+  </div>
+</div> 

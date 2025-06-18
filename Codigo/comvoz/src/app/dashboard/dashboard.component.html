@@ -1,0 +1,94 @@
+<div class="dashboard-container">
+  <div class="header">
+    <h1>Dashboard</h1>
+    <div class="user-welcome" *ngIf="userProfile">
+      <p>Bem-vindo(a), <strong>{{ userProfile.nome_completo }}</strong></p>
+      <p *ngIf="userProfile.plano" class="plano-info">
+        Plano atual: <strong>{{ userProfile.plano.nome }}</strong>
+      </p>
+    </div>
+  </div>
+
+
+
+  <div class="loading" *ngIf="carregando">
+    <div class="spinner"></div>
+    <p>Carregando informações...</p>
+  </div>
+
+  <div class="dashboard-content" *ngIf="!carregando">
+    <!-- Cards de estatísticas -->
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-icon">
+          <i class="material-icons">assessment</i>
+        </div>
+        <div class="stat-content">
+          <h3>Pesquisas Ativas</h3>
+          <p class="stat-value">{{ pesquisasAtivas }}</p>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">
+          <i class="material-icons">poll</i>
+        </div>
+        <div class="stat-content">
+          <h3>Respostas Recebidas</h3>
+          <p class="stat-value">{{ respostasRecebidas }}</p>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">
+          <i class="material-icons">trending_up</i>
+        </div>
+        <div class="stat-content">
+          <h3>Taxa de Resposta</h3>
+          <p class="stat-value">{{ taxaResposta }}%</p>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">
+          <i class="material-icons">emoji_events</i>
+        </div>
+        <div class="stat-content">
+          <h3>Score NPS</h3>
+          <p class="stat-value" *ngIf="scoreNPS > 0">{{ scoreNPS }}</p>
+          <p class="stat-value-unavailable" *ngIf="scoreNPS === 0">N/A</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ações rápidas -->
+    <div class="quick-actions">
+      <h2>Ações Rápidas</h2>
+      <div class="actions-row">
+        <div class="action-card" (click)="navegarPara('/pesquisas')">
+          <div class="action-icon">
+            <i class="material-icons">list</i>
+          </div>
+          <h3>Ver Minhas Pesquisas</h3>
+          <p>Acesse e gerencie todas as suas pesquisas</p>
+        </div>
+
+        <div class="action-card" (click)="navegarPara('/questoes')">
+          <div class="action-icon">
+            <i class="material-icons">add_circle</i>
+          </div>
+          <h3>Criar Nova Pesquisa</h3>
+          <p>Crie um novo formulário de pesquisa</p>
+        </div>
+
+        <div class="action-card" (click)="navegarPara('/planos')">
+          <div class="action-icon">
+            <i class="material-icons">card_membership</i>
+          </div>
+          <h3>Meu Plano</h3>
+          <p>Visualize ou altere seu plano atual</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

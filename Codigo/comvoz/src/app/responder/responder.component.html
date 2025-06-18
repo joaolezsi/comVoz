@@ -1,0 +1,131 @@
+<div class="responder-container">
+  <div class="form-container">
+    <!-- Cabeçalho da pesquisa -->
+    <div *ngIf="!carregando && !erro" class="form-header">
+      <h1 *ngIf="pesquisa?.titulo">{{ pesquisa.titulo }}</h1>
+      <p *ngIf="pesquisa?.descricao" class="form-description">{{ pesquisa.descricao }}</p>
+    </div>
+
+    <!-- Mensagem de carregando -->
+    <div *ngIf="carregando" class="loading-message">
+      <p>Carregando formulário, aguarde...</p>
+    </div>
+
+    <!-- Mensagem de erro -->
+    <div *ngIf="erro" class="error-message">
+      <p>Ocorreu um erro ao carregar a pesquisa.</p>
+    </div>
+
+    <!-- Formulário de confirmação de dados -->
+    <form *ngIf="!carregando && !erro && !enviado" [formGroup]="formulario" (ngSubmit)="enviarFormulario()" class="form-content">
+      <div class="form-group">
+        <h2>Confirme seus dados</h2>
+        <p class="form-subtitle">Por favor, confirme seu nome e email para prosseguir com a pesquisa</p>
+      </div>
+      
+      <div class="form-group">
+        <label for="nome">Nome completo *</label>
+        <input 
+          type="text" 
+          id="nome" 
+          formControlName="nome" 
+          class="form-control" 
+          [ngClass]="{'invalid': formulario.get('nome')?.invalid && formulario.get('nome')?.touched}"
+          placeholder="Digite seu nome completo"
+        >
+        <div class="error-hint" *ngIf="formulario.get('nome')?.invalid && formulario.get('nome')?.touched">
+          O nome é obrigatório
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email *</label>
+        <input 
+          type="email" 
+          id="email" 
+          formControlName="email" 
+          class="form-control"
+          [ngClass]="{'invalid': formulario.get('email')?.invalid && formulario.get('email')?.touched}"
+          placeholder="Digite seu email"
+        >
+        <div class="error-hint" *ngIf="formulario.get('email')?.invalid && formulario.get('email')?.touched">
+          <span *ngIf="formulario.get('email')?.errors?.['required']">O email é obrigatório</span>
+          <span *ngIf="formulario.get('email')?.errors?.['email']">Digite um email válido</span>
+        </div>
+      </div>
+
+      <!-- Perguntas da pesquisa -->
+      <div class="perguntas-container" *ngIf="pesquisa?.perguntas?.length > 0">
+        <h2>Perguntas</h2>
+        
+        <div class="pergunta" *ngFor="let pergunta of pesquisa.perguntas; let i = index">
+          <div class="pergunta-header">
+            <h3>{{ pergunta.texto }}</h3>
+          </div>
+
+          <!-- Resposta NPS -->
+          <div *ngIf="pergunta.tipo === 'nps'" class="nps-container">
+            <div class="nps-scale">
+              <div class="nps-options">
+                <button 
+                  *ngFor="let valor of [0,1,2,3,4,5,6,7,8,9,10]" 
+                  type="button"
+                  class="nps-option"
+                  [class.selected]="formulario.get('respostas')?.get(pergunta.id.toString())?.value === valor"
+                  (click)="selecionarNPS(pergunta.id, valor)"
+                >
+                  {{ valor }}
+                </button>
+              </div>
+              <div class="nps-labels">
+                <span>Não recomendaria</span>
+                <span>Recomendaria</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Resposta de Escolha -->
+          <div *ngIf="pergunta.tipo === 'escolha'" class="escolha-container">
+            <div class="opcoes">
+              <button 
+                *ngFor="let opcao of pergunta.opcoes" 
+                type="button"
+                class="opcao"
+                [class.selected]="formulario.get('respostas')?.get(pergunta.id.toString())?.value === opcao.id"
+                (click)="selecionarOpcao(pergunta.id, opcao.id)"
+              >
+                {{ opcao.texto }}
+              </button>
+            </div>
+          </div>
+
+          <!-- Resposta de Texto -->
+          <div *ngIf="pergunta.tipo === 'texto'" class="texto-container">
+            <textarea 
+              [formControlName]="'respostas.' + pergunta.id"
+              class="texto-resposta"
+              placeholder="Digite sua resposta aqui..."
+              rows="3"
+            ></textarea>
+          </div>
+        </div>
+      </div>
+
+
+
+      <div class="form-actions">
+        <button type="submit" class="btn-submit" [disabled]="!verificarFormularioValido() || carregando">
+          <span *ngIf="!carregando">Enviar Resposta</span>
+          <span *ngIf="carregando">Enviando...</span>
+        </button>
+      </div>
+    </form>
+
+    <!-- Mensagem de sucesso -->
+    <div *ngIf="enviado" class="success-message">
+      <div class="success-icon">✓</div>
+      <h2>Resposta Enviada!</h2>
+      <p>Obrigado! Sua resposta foi enviada com sucesso.</p>
+    </div>
+  </div>
+</div> 

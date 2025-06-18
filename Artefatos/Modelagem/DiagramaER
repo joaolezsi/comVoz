@@ -1,0 +1,51 @@
+@startuml
+
+' Diagrama Entidade-Relacionamento (ER)
+
+entity "Usuário" {
+  +id: INT
+  +nome: STRING
+  +email: STRING
+  +senha: STRING
+}
+
+entity "Empresa" {
+  +id: INT
+  +nome: STRING
+  +cnpj: STRING
+}
+
+entity "Formulário" {
+  +id: INT
+  +titulo: STRING
+  +data_criacao: DATE
+  +empresa_id: INT
+}
+
+entity "Pergunta" {
+  +id: INT
+  +texto: STRING
+  +tipo: STRING
+  +formulario_id: INT
+}
+
+entity "Resposta" {
+  +id: INT
+  +pergunta_id: INT
+  +valor: STRING
+}
+
+entity "Dashboard" {
+  +id: INT
+  +empresa_id: INT
+  +dados_gerados: TEXT
+}
+
+' Relacionamentos e cardinalidade
+"Usuário" ||--o{ "Empresa" : "Gerencia (1 - N)"
+"Empresa" ||--o{ "Formulário" : "Possui (1 - N)"
+"Formulário" ||--o{ "Pergunta" : "Contém (1 - N)"
+"Pergunta" ||--o{ "Resposta" : "Gera (1 - N)"
+"Empresa" ||--o{ "Dashboard" : "Gera (1 - N)"
+
+@enduml

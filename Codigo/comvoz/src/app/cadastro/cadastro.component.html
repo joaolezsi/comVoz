@@ -1,0 +1,227 @@
+<div class="cadastro-container">
+  <div class="cadastro-card">
+    <div class="logo-section">
+      <div class="logo">
+        <img src="assets/logo_comvoz.jpg" alt="Logo Comvoz">
+      </div>
+      <h1 class="welcome-title">Criar Nova Conta</h1>
+      <p class="welcome-subtitle">Junte-se ao ComVoz e comece a coletar feedback valioso</p>
+    </div>
+
+    <form [formGroup]="cadastroForm" (ngSubmit)="onSubmit()" class="cadastro-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="nome" class="form-label">
+            <i class="material-icons">person</i>
+            Nome Completo
+          </label>
+          <div class="input-wrapper">
+            <input
+              type="text"
+              id="nome"
+              formControlName="nome"
+              placeholder="Digite seu nome completo"
+              [disabled]="isSubmitting"
+              class="form-input"
+            />
+          </div>
+          <div *ngIf="cadastroForm.get('nome')?.invalid && cadastroForm.get('nome')?.touched" class="error-message">
+            <i class="material-icons">warning</i>
+            Por favor, insira seu nome completo
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="email" class="form-label">
+            <i class="material-icons">email</i>
+            E-mail
+          </label>
+          <div class="input-wrapper">
+            <input
+              type="email"
+              id="email"
+              formControlName="email"
+              placeholder="Digite seu e-mail"
+              [disabled]="isSubmitting"
+              class="form-input"
+            />
+          </div>
+          <div *ngIf="cadastroForm.get('email')?.invalid && cadastroForm.get('email')?.touched" class="error-message">
+            <i class="material-icons">warning</i>
+            Por favor, insira um e-mail válido
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="telefone" class="form-label">
+            <i class="material-icons">phone</i>
+            Telefone
+          </label>
+          <div class="input-wrapper">
+            <input
+              type="tel"
+              id="telefone"
+              formControlName="telefone"
+              placeholder="Digite seu telefone"
+              [disabled]="isSubmitting"
+              class="form-input"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="cargo" class="form-label">
+            <i class="material-icons">work</i>
+            Cargo
+          </label>
+          <div class="input-wrapper">
+            <input
+              type="text"
+              id="cargo"
+              formControlName="cargo"
+              placeholder="Digite seu cargo"
+              [disabled]="isSubmitting"
+              class="form-input"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="empresa" class="form-label">
+            <i class="material-icons">business</i>
+            Empresa que trabalha
+          </label>
+          <div class="input-wrapper">
+            <input
+              type="text"
+              id="empresa"
+              formControlName="empresa"
+              placeholder="Digite o nome da empresa"
+              [disabled]="isSubmitting"
+              class="form-input"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="cnpj" class="form-label">
+            <i class="material-icons">business_center</i>
+            CNPJ
+          </label>
+          <div class="input-wrapper">
+            <input
+              type="text"
+              id="cnpj"
+              formControlName="cnpj"
+              placeholder="Digite o CNPJ da empresa"
+              [disabled]="isSubmitting"
+              class="form-input"
+            />
+          </div>
+          <div *ngIf="cadastroForm.get('cnpj')?.invalid && cadastroForm.get('cnpj')?.touched" class="error-message">
+            <i class="material-icons">warning</i>
+            CNPJ inválido
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="password" class="form-label">
+            <i class="material-icons">lock</i>
+            Senha
+          </label>
+          <div class="input-wrapper password-wrapper">
+            <input
+              [type]="showPassword ? 'text' : 'password'"
+              id="password"
+              formControlName="password"
+              placeholder="Digite a senha"
+              [disabled]="isSubmitting"
+              class="form-input"
+            />
+            <button
+              type="button"
+              class="toggle-password"
+              (click)="togglePasswordVisibility()"
+              [disabled]="isSubmitting"
+            >
+              <i class="material-icons">{{ showPassword ? 'visibility_off' : 'visibility' }}</i>
+            </button>
+          </div>
+          <div class="password-strength-container">
+            <div class="password-strength-info">
+              <span *ngIf="passwordStrength === 1" class="strength-text weak">Senha Fraca!</span>
+              <span *ngIf="passwordStrength === 2" class="strength-text good">Senha Boa!</span>
+              <span *ngIf="passwordStrength >= 3" class="strength-text strong">Senha Forte!</span>
+            </div>
+            <div class="password-strength-bar">
+              <div class="strength-level" [ngClass]="passwordStrengthColor"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="passwordRepeat" class="form-label">
+            <i class="material-icons">lock_outline</i>
+            Repita a Senha
+          </label>
+          <div class="input-wrapper password-wrapper">
+            <input
+              [type]="showPasswordRepeat ? 'text' : 'password'"
+              id="passwordRepeat"
+              formControlName="passwordRepeat"
+              placeholder="Repita a senha"
+              [disabled]="isSubmitting"
+              class="form-input"
+            />
+            <button
+              type="button"
+              class="toggle-password"
+              (click)="togglePasswordRepeatVisibility()"
+              [disabled]="isSubmitting"
+            >
+              <i class="material-icons">{{ showPasswordRepeat ? 'visibility_off' : 'visibility' }}</i>
+            </button>
+          </div>
+          <div *ngIf="cadastroForm.hasError('passwordMismatch') && cadastroForm.get('passwordRepeat')?.touched" class="error-message">
+            <i class="material-icons">warning</i>
+            As senhas não coincidem
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" [disabled]="cadastroForm.invalid || passwordStrength < 2 || isSubmitting" class="cadastro-button">
+        <span *ngIf="!isSubmitting" class="button-content">
+          <i class="material-icons">person_add</i>
+          Cadastrar
+        </span>
+        <span *ngIf="isSubmitting" class="button-content loading">
+          <i class="material-icons spinning">sync</i>
+          Processando...
+        </span>
+      </button>
+
+      <div class="form-footer">
+        <div class="divider">
+          <span>Já tem uma conta?</span>
+        </div>
+        <a routerLink="/login" class="login-link" [class.disabled]="isSubmitting">
+          <i class="material-icons">login</i>
+          Voltar para o login
+        </a>
+      </div>
+    </form>
+  </div>
+
+  <div class="background-decoration">
+    <div class="circle circle-1"></div>
+    <div class="circle circle-2"></div>
+    <div class="circle circle-3"></div>
+    <div class="circle circle-4"></div>
+  </div>
+</div>

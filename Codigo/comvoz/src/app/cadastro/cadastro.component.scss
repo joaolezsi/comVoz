@@ -1,0 +1,549 @@
+.cadastro-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  position: relative;
+  overflow: hidden;
+  padding: 20px;
+
+  .background-decoration {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+
+    .circle {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      animation: float 8s ease-in-out infinite;
+
+      &.circle-1 {
+        width: 300px;
+        height: 300px;
+        top: -150px;
+        right: -150px;
+        animation-delay: 0s;
+      }
+
+      &.circle-2 {
+        width: 200px;
+        height: 200px;
+        bottom: -100px;
+        left: -100px;
+        animation-delay: 2s;
+      }
+
+      &.circle-3 {
+        width: 150px;
+        height: 150px;
+        top: 40%;
+        right: 5%;
+        animation-delay: 4s;
+      }
+
+      &.circle-4 {
+        width: 120px;
+        height: 120px;
+        top: 20%;
+        left: 5%;
+        animation-delay: 6s;
+      }
+    }
+  }
+
+  .cadastro-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 
+      0 25px 50px rgba(0, 0, 0, 0.15),
+      0 0 0 1px rgba(255, 255, 255, 0.2);
+    width: 100%;
+    max-width: 900px;
+    position: relative;
+    z-index: 2;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 
+        0 35px 60px rgba(0, 0, 0, 0.2),
+        0 0 0 1px rgba(255, 255, 255, 0.3);
+    }
+
+    .logo-section {
+      text-align: center;
+      margin-bottom: 40px;
+
+      .logo {
+        margin-bottom: 20px;
+        
+        img {
+          width: 120px;
+          height: auto;
+          border-radius: 12px;
+          box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+          transition: transform 0.3s ease;
+
+          &:hover {
+            transform: scale(1.05);
+          }
+        }
+      }
+
+      .welcome-title {
+        font-size: 32px;
+        font-weight: 700;
+        color: #2c3e50;
+        margin: 0 0 8px 0;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .welcome-subtitle {
+        font-size: 16px;
+        color: #7f8c8d;
+        margin: 0;
+        font-weight: 400;
+      }
+    }
+
+    .cadastro-form {
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+        margin-bottom: 24px;
+
+        @media (max-width: 768px) {
+          grid-template-columns: 1fr;
+          gap: 20px;
+        }
+      }
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+
+        .form-label {
+          display: flex;
+          align-items: center;
+          font-size: 14px;
+          font-weight: 600;
+          color: #2c3e50;
+          margin-bottom: 12px;
+
+          i {
+            margin-right: 8px;
+            font-size: 18px;
+            color: #667eea;
+          }
+        }
+
+        .input-wrapper {
+          position: relative;
+
+          &.password-wrapper {
+            .toggle-password {
+              position: absolute;
+              right: 12px;
+              top: 50%;
+              transform: translateY(-50%);
+              background: none;
+              border: none;
+              cursor: pointer;
+              color: #7f8c8d;
+              padding: 4px;
+              border-radius: 4px;
+              transition: all 0.2s ease;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+
+              &:hover {
+                color: #667eea;
+                background-color: rgba(102, 126, 234, 0.1);
+              }
+
+              &:disabled {
+                cursor: not-allowed;
+                opacity: 0.5;
+              }
+
+              i {
+                font-size: 20px;
+              }
+            }
+          }
+
+          .form-input {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid #e1e8ed;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background-color: #ffffff;
+            box-sizing: border-box;
+
+            &:focus {
+              outline: none;
+              border-color: #667eea;
+              box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            }
+
+            &:disabled {
+              background-color: #f8f9fa;
+              color: #6c757d;
+              cursor: not-allowed;
+            }
+
+            &::placeholder {
+              color: #adb5bd;
+            }
+          }
+        }
+
+        .error-message {
+          display: flex;
+          align-items: center;
+          color: #e74c3c;
+          font-size: 13px;
+          font-weight: 500;
+          margin-top: 8px;
+          animation: slideIn 0.3s ease;
+
+          i {
+            margin-right: 6px;
+            font-size: 16px;
+          }
+        }
+
+        .password-strength-container {
+          margin-top: 8px;
+
+          .password-strength-info {
+            margin-bottom: 8px;
+            font-size: 13px;
+            font-weight: 600;
+
+            .strength-text {
+              &.weak {
+                color: #f39c12;
+              }
+
+              &.good {
+                color: #27ae60;
+              }
+
+              &.strong {
+                color: #2ecc71;
+              }
+            }
+          }
+
+          .password-strength-bar {
+            width: 100%;
+            height: 6px;
+            background-color: #e1e8ed;
+            border-radius: 3px;
+            overflow: hidden;
+
+            .strength-level {
+              height: 100%;
+              transition: width 0.4s ease, background-color 0.4s ease;
+              border-radius: 3px;
+
+              &.weak {
+                width: 33%;
+                background: linear-gradient(90deg, #f39c12, #e67e22);
+              }
+
+              &.good {
+                width: 66%;
+                background: linear-gradient(90deg, #27ae60, #2ecc71);
+              }
+
+              &.strong {
+                width: 100%;
+                background: linear-gradient(90deg, #2ecc71, #27ae60);
+              }
+            }
+          }
+        }
+      }
+
+      .cadastro-button {
+        width: 100%;
+        padding: 18px 24px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin: 32px 0 24px 0;
+        position: relative;
+        overflow: hidden;
+
+        &::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+          transition: left 0.5s;
+        }
+
+        &:hover::before {
+          left: 100%;
+        }
+
+        &:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
+        }
+
+        &:active {
+          transform: translateY(0);
+        }
+
+        &:disabled {
+          background: #bdc3c7;
+          cursor: not-allowed;
+          transform: none;
+          box-shadow: none;
+
+          &::before {
+            display: none;
+          }
+        }
+
+        .button-content {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          i {
+            margin-right: 8px;
+            font-size: 18px;
+          }
+
+          &.loading i.spinning {
+            animation: spin 1s linear infinite;
+          }
+        }
+      }
+
+      .form-footer {
+        text-align: center;
+
+        .divider {
+          margin: 20px 0;
+          position: relative;
+          color: #adb5bd;
+          font-size: 14px;
+          font-weight: 500;
+
+          &::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background-color: #e1e8ed;
+            z-index: 1;
+          }
+
+          span {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 0 16px;
+            position: relative;
+            z-index: 2;
+          }
+        }
+
+        .login-link {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          color: #667eea;
+          text-decoration: none;
+          font-size: 14px;
+          font-weight: 600;
+          padding: 12px 24px;
+          border: 2px solid #667eea;
+          border-radius: 12px;
+          transition: all 0.3s ease;
+
+          i {
+            margin-right: 8px;
+            font-size: 16px;
+          }
+
+          &:hover {
+            background-color: #667eea;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+          }
+
+          &.disabled {
+            opacity: 0.5;
+            pointer-events: none;
+            cursor: not-allowed;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Animações
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  33% {
+    transform: translateY(-15px) rotate(120deg);
+  }
+  66% {
+    transform: translateY(-10px) rotate(240deg);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Responsividade
+@media (max-width: 968px) {
+  .cadastro-container {
+    padding: 15px;
+
+    .cadastro-card {
+      max-width: 700px;
+      padding: 30px 25px;
+      border-radius: 16px;
+
+      .logo-section {
+        margin-bottom: 30px;
+
+        .welcome-title {
+          font-size: 28px;
+        }
+
+        .welcome-subtitle {
+          font-size: 15px;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .cadastro-container {
+    padding: 10px;
+
+    .cadastro-card {
+      padding: 25px 20px;
+      margin: 10px;
+
+      .logo-section {
+        margin-bottom: 25px;
+
+        .welcome-title {
+          font-size: 24px;
+        }
+
+        .welcome-subtitle {
+          font-size: 14px;
+        }
+      }
+
+      .cadastro-form {
+        .form-row {
+          grid-template-columns: 1fr;
+          gap: 16px;
+          margin-bottom: 20px;
+        }
+
+        .form-group {
+          .input-wrapper .form-input {
+            padding: 14px 16px;
+            font-size: 15px;
+          }
+        }
+
+        .cadastro-button {
+          padding: 16px 20px;
+          font-size: 15px;
+          margin: 24px 0 20px 0;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .cadastro-container {
+    .cadastro-card {
+      padding: 20px 15px;
+
+      .logo-section {
+        .logo img {
+          width: 100px;
+        }
+
+        .welcome-title {
+          font-size: 22px;
+        }
+      }
+
+      .cadastro-form {
+        .form-group {
+          .input-wrapper .form-input {
+            padding: 12px 14px;
+            font-size: 14px;
+          }
+        }
+
+        .cadastro-button {
+          padding: 14px 18px;
+          font-size: 14px;
+        }
+      }
+    }
+  }
+}

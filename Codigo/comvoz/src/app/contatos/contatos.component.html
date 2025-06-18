@@ -1,0 +1,106 @@
+<div class="main-container">
+  <!-- Sidebar -->
+  <app-sidebar (itemSelected)="onSidebarItemSelected($event)"></app-sidebar>
+
+  <!-- Conteúdo principal -->
+  <div class="content-container">
+    <div class="container">
+      <div class="header">
+        <h1>Meus Contatos</h1>
+      </div>
+
+      
+
+      <!-- Formulário para criar contato -->
+      <div class="card-container">
+        <div class="card">
+          <h2>Novo Contato</h2>
+          <form [formGroup]="contatoForm" (ngSubmit)="criarContato()">
+            <div class="form-group">
+              <label for="nome">Nome</label>
+              <input type="text" id="nome" formControlName="nome" placeholder="Nome do contato">
+              <div class="erro-validacao" *ngIf="contatoForm.get('nome')?.invalid && contatoForm.get('nome')?.touched">
+                Nome é obrigatório
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" formControlName="email" placeholder="email@exemplo.com">
+              <div class="erro-validacao" *ngIf="contatoForm.get('email')?.hasError('required') && contatoForm.get('email')?.touched">
+                Email é obrigatório
+              </div>
+              <div class="erro-validacao" *ngIf="contatoForm.get('email')?.hasError('email') && contatoForm.get('email')?.touched">
+                Email inválido
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="telefone">Telefone</label>
+              <input type="tel" id="telefone" formControlName="telefone" placeholder="(00) 12345-6789">
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn-primario" [disabled]="contatoForm.invalid">Salvar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Seção de importação de contatos -->
+      <div class="card-container">
+        <div class="card importacao">
+          <h2>Importar Contatos</h2>
+          <p>Importe seus contatos utilizando um arquivo Excel/CSV.</p>
+          
+          <div class="modelo-download">
+            <button class="btn-secundario" (click)="baixarModeloExcel()">
+              <i class="material-icons">download</i>
+              Baixar Modelo CSV
+            </button>
+            <span>Faça o download do modelo CSV para preencher corretamente.</span>
+          </div>
+
+          <div class="upload-container">
+            <input type="file" id="fileInput" (change)="onFileSelected($event)" accept=".xlsx,.xls,.csv" class="file-input">
+            <label for="fileInput" class="file-label">
+              <i class="material-icons">cloud_upload</i>
+              <span>{{ arquivoSelecionado ? arquivoSelecionado.name : 'Escolher arquivo' }}</span>
+            </label>
+            <button class="btn-primario" [disabled]="!arquivoSelecionado" (click)="uploadArquivo()">
+              Importar
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lista de contatos -->
+      <div class="card-container">
+        <div class="card">
+          <h2>Meus Contatos</h2>
+          <div *ngIf="contatos.length === 0" class="sem-contatos">
+            Nenhum contato encontrado.
+          </div>
+          
+          <div class="lista-contatos" *ngIf="contatos.length > 0">
+            <div class="contato" *ngFor="let contato of contatos">
+              <div class="contato-content">
+                <div class="contato-header">
+                  <h3>{{ contato.nome || 'Sem nome' }}</h3>
+                </div>
+                <div class="contato-info">
+                  <span class="info-item">
+                    <i class="material-icons">email</i>
+                    {{ contato.email }}
+                  </span>
+                  <span class="info-item" *ngIf="contato.telefone">
+                    <i class="material-icons">phone</i>
+                    {{ contato.telefone }}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</div> 

@@ -1,0 +1,267 @@
+<div class="main-container">
+  <!-- Sidebar -->
+  <app-sidebar (itemSelected)="onSidebarItemSelected($event)"></app-sidebar>
+
+  <!-- Conteúdo principal -->
+  <div class="content-container">
+    <div class="container">
+      <div class="header">
+        <h1>Criar questões</h1>
+        <button class="add-button" (click)="abrirModal()" title="Adicionar Nova Questão">
+          <i class="material-icons">add</i>
+        </button>
+      </div>
+
+      <!-- Search and Filters Section -->
+      <div class="search-filters-section">
+        <div class="search-container">
+          <i class="material-icons">search</i>
+          <input 
+            type="text" 
+            [(ngModel)]="termoBusca" 
+            (ngModelChange)="onBuscaChange()"
+            placeholder="Buscar questões...">
+        </div>
+        <div class="filtros">
+          <button class="filtro-button" [class.active]="filtroTipo === null" (click)="onFiltroTipoChange(null)">
+            Todos
+          </button>
+          <button class="filtro-button" [class.active]="filtroTipo === 'escolha'" (click)="onFiltroTipoChange('escolha')">
+            <i class="material-icons">check_box</i>
+            Múltipla Escolha
+          </button>
+          <button class="filtro-button" [class.active]="filtroTipo === 'nps'" (click)="onFiltroTipoChange('nps')">
+            <i class="material-icons">sentiment_satisfied</i>
+            Escalar
+          </button>
+          <button class="filtro-button" [class.active]="filtroTipo === 'texto'" (click)="onFiltroTipoChange('texto')">
+            <i class="material-icons">short_text</i>
+            Texto
+          </button>
+        </div>
+      </div>
+
+      
+
+      <!-- Loading -->
+      <div *ngIf="carregando" class="loading">
+        <div class="spinner"></div>
+        <p>Carregando...</p>
+      </div>
+
+      <!-- Sem questões -->
+      <div *ngIf="questoesFiltradas.length === 0 && !carregando" class="sem-questoes">
+        <div class="empty-state">
+          <i class="material-icons">question_answer</i>
+          <h3>Nenhuma questão encontrada</h3>
+          <p *ngIf="termoBusca || filtroTipo">Tente ajustar sua busca ou filtros</p>
+          <p *ngIf="!termoBusca && !filtroTipo">Clique no botão + para adicionar novas questões</p>
+        </div>
+      </div>
+
+      <!-- Lista de Questões -->
+      <div class="lista-questoes" *ngIf="questoesFiltradas.length > 0 && !carregando">
+        <p class="instrucao">Selecione no minimo 5 questões do tipo Escalar para incluir na sua pesquisa:</p>
+        
+        <div class="questao" 
+             *ngFor="let questao of questoesFiltradas" 
+             [class.selecionada]="questao.selecionada" 
+             (click)="alternarSelecao(questao)">
+          <div class="checkbox">
+            <i class="material-icons">{{ questao.selecionada ? 'check_circle' : 'radio_button_unchecked' }}</i>
+          </div>
+          
+          <div class="questao-content">
+            <h3>{{ questao.texto }}</h3>
+            
+            <div class="questao-opcoes" *ngIf="questao.opcoes && questao.opcoes.length > 0">
+              <div class="opcoes-preview">
+                <span *ngFor="let opcao of questao.opcoes.slice(0, 3)">{{ opcao.texto }}</span>
+                <span *ngIf="questao.opcoes.length > 3">+ {{ questao.opcoes.length - 3 }} mais</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="questao-tipo">
+            <span class="tipo-badge">
+              <i class="material-icons" *ngIf="questao.tipo === 'escolha'">check_box</i>
+              <i class="material-icons" *ngIf="questao.tipo === 'nps'">sentiment_satisfied</i>
+              <i class="material-icons" *ngIf="questao.tipo === 'texto'">short_text</i>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Botão fixo de Criar Questões -->
+      <div class="acoes">
+        <button class="processar-button" 
+                (click)="abrirModalNovaPesquisa()" 
+                [disabled]="getQuestoesSelecionadasCount() < 5 || carregando"
+                [class.loading]="carregando">
+          <i class="material-icons">add_circle</i>
+          Criar Pesquisa
+          <span class="questoes-contador" *ngIf="getQuestoesSelecionadasCount() > 0">
+            ({{ getQuestoesSelecionadasCount() }}/5)
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de Nova Questão -->
+<div class="modal" *ngIf="modalAberto">
+  <div class="modal-conteudo">
+    <div class="modal-header">
+      <h2>Adicionar Nova Questão</h2>
+      <button class="close-button" (click)="fecharModal()">×</button>
+    </div>
+
+    <div class="modal-body">
+      <div class="form-group">
+        <label>Texto da Questão:</label>
+        <input 
+          type="text" 
+          [(ngModel)]="novaQuestao.texto" 
+          placeholder="Ex: Qual o seu nível de satisfação com o atendimento recebido?">
+      </div>
+
+      <div class="tipo-resposta">
+        <label>Tipo de Resposta:</label>
+        <div class="tipo-options">
+          <div class="tipo-option" 
+               [class.selected]="novaQuestao.tipoResposta === 'checkbox'"
+               (click)="novaQuestao.tipoResposta = 'checkbox'">
+            <i class="material-icons">check_box</i>
+            <span>Múltipla Escolha</span>
+          </div>
+          <div class="tipo-option" 
+               [class.selected]="novaQuestao.tipoResposta === 'nps'"
+               (click)="novaQuestao.tipoResposta = 'nps'">
+            <i class="material-icons">sentiment_satisfied</i>
+            <span>Escalar (1-10)</span>
+          </div>
+          <div class="tipo-option" 
+               [class.selected]="novaQuestao.tipoResposta === 'texto'"
+               (click)="novaQuestao.tipoResposta = 'texto'">
+            <i class="material-icons">short_text</i>
+            <span>Texto Livre</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Opções para Checkbox -->
+      <div class="alternativas-section" *ngIf="novaQuestao.tipoResposta === 'checkbox'">
+        <div class="alternativas-header">
+          <label>Opções de Resposta:</label>
+        </div>
+        
+        <div class="alternativas-list"> 
+          <div class="alternativa-item" *ngFor="let alt of novaQuestao.alternativas; let i = index">
+            <div class="alternativa-input">
+              <span class="alternativa-numero">{{ i + 1 }}</span>
+              <input 
+                type="text" 
+                [(ngModel)]="alt.texto" 
+                placeholder="Digite a opção">
+              <button class="remove-alt" (click)="removerAlternativa(i)">×</button>
+            </div>
+          </div>
+          
+          <div class="alternativa-item nova-alternativa">
+            <div class="alternativa-input">
+              <span class="alternativa-numero">{{ novaQuestao.alternativas.length + 1 }}</span>
+              <input 
+                type="text" 
+                [(ngModel)]="novaAlternativa" 
+                placeholder="Adicionar nova opção"
+                (keyup.enter)="adicionarAlternativa()">
+              <button class="add-alt" (click)="adicionarAlternativa()" [disabled]="!novaAlternativa.trim()">
+                <i class="material-icons">add</i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Configurações NPS -->
+      <div class="nps-info" *ngIf="novaQuestao.tipoResposta === 'nps'">
+        <i class="material-icons">info</i>
+        <p>Esta questão será exibida como uma escala de 1 a 10, onde 1 representa "Muito Insatisfeito" e 10 representa "Muito Satisfeito".</p>
+      </div>
+
+      <!-- Configurações Texto -->
+      <div class="texto-config" *ngIf="novaQuestao.tipoResposta === 'texto'">
+        <div class="form-group">
+          <label>Limite de Caracteres:</label>
+          <input 
+            type="number" 
+            [(ngModel)]="novaQuestao.maxCaracteres" 
+            min="1" 
+            max="1000"
+            placeholder="Ex: 500">
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="cancel-button" (click)="fecharModal()">Cancelar</button>
+      <button class="save-button" 
+              (click)="adicionarQuestao()" 
+              [disabled]="!questaoValida() || carregando"
+              [class.loading]="carregando">
+        Adicionar Questão
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de Nova Pesquisa -->
+<div class="modal" *ngIf="novaPesquisaModalAberto">
+  <div class="modal-conteudo">
+    <div class="modal-header">
+      <h2>Criar Nova Pesquisa</h2>
+      <button class="close-button" (click)="fecharModalNovaPesquisa()">×</button>
+    </div>
+
+    <div class="modal-body">
+      <div class="form-group">
+        <label>Título da Pesquisa:</label>
+        <input 
+          type="text" 
+          [(ngModel)]="novaPesquisaTitulo" 
+          placeholder="Ex: Pesquisa de Satisfação de Clientes">
+      </div>
+
+      <div class="form-group">
+        <label>Descrição <br> (Essa mensagem será exibida para o usuário ao receber a pesquisa):</label>
+        <textarea 
+          [(ngModel)]="novaPesquisaDescricao" 
+          placeholder="Descreva o objetivo da pesquisa..."></textarea>
+      </div>
+
+      <div class="questoes-selecionadas">
+        <div class="questoes-header">
+          <h3>Questões Selecionadas:</h3>
+          <span class="contador">{{ getQuestoesSelecionadasCount() }} questões</span>
+        </div>
+
+        <ul class="questoes-lista">
+          <li *ngFor="let questao of getQuestoesSelecionadas()">
+            {{ questao.texto }}
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="cancel-button" (click)="fecharModalNovaPesquisa()">Cancelar</button>
+      <button class="save-button" 
+              (click)="processarQuestoesSelecionadas()" 
+              [disabled]="!novaPesquisaTitulo.trim() || carregando"
+              [class.loading]="carregando">
+        Criar Pesquisa
+      </button>
+    </div>
+  </div>
+</div>

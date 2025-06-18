@@ -1,0 +1,87 @@
+<div class="main-container">
+  <!-- Sidebar -->
+  <app-sidebar></app-sidebar>
+
+  <!-- Conteúdo principal -->
+  <div class="content-container">
+    <div class="container">
+      <div class="header">
+        <h1>Solicitações de Troca de Plano</h1>
+      </div>
+
+      <!-- Loading -->
+      <div *ngIf="carregando" class="loading">
+        <div class="spinner"></div>
+        <p>Carregando...</p>
+      </div>
+
+      <!-- Sem solicitações -->
+      <div *ngIf="trocas.length === 0 && !carregando" class="sem-solicitacoes">
+        <div class="empty-state">
+          <i class="material-icons">assignment</i>
+          <h3>Nenhuma solicitação pendente</h3>
+          <p>Não há solicitações de troca de plano para analisar no momento</p>
+        </div>
+      </div>
+
+      <!-- Lista de Solicitações -->
+      <div class="lista-solicitacoes" *ngIf="trocas.length > 0 && !carregando">
+        <div class="solicitacao" *ngFor="let troca of trocas">
+          <div class="solicitacao-content">
+            <div class="empresa-info">
+              <div class="empresa-header">
+                <h3>{{ troca.user.name }}</h3>
+                <!-- <span class="cnpj">CNPJ: {{ troca.user.cnpj }}</span> -->
+                <span class="email">Email: {{ troca.user.email }}</span>
+              </div>
+              
+              <div class="plano-info">
+                <div class="plano-detalhes">
+                  <div class="plano-header">
+                    <i class="material-icons">business</i>
+                    <h4>Plano Desejado</h4>
+                  </div>
+                  <div class="plano-dados">
+                    <span class="plano-nome">{{ troca.plan.name }}</span>
+                    <span class="plano-descricao">{{ troca.plan.description }}</span>
+                    <span class="plano-preco">R$ {{ troca.plan.price }}/mês</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="data-info">
+                <i class="material-icons">event</i>
+                <span>Solicitado em: {{ troca.interest_date | date:'dd/MM/yyyy HH:mm' }}</span>
+              </div>
+            </div>
+
+            <div class="acoes" *ngIf="troca.status === 'pendente'">
+              <button class="rejeitar-button" (click)="responderSolicitacao(troca.id, false)" [disabled]="carregando">
+                <i class="material-icons">close</i>
+                Recusar
+              </button>
+              <button class="aprovar-button" (click)="responderSolicitacao(troca.id, true)" [disabled]="carregando">
+                <i class="material-icons">check</i>
+                Aceitar
+              </button>
+            </div>
+
+            <div class="status" *ngIf="troca.status !== 'pendente'">
+              <span class="status-badge" [class.aprovado]="troca.status === 'aprovado' || troca.status === 'atendido'" [class.rejeitado]="troca.status === 'rejeitado'">
+                {{ troca.status === 'aprovado' || troca.status === 'atendido' ? 'Aprovado' : 'Recusado' }}
+              </span>
+            </div>
+          </div>
+
+          <div class="observacoes" *ngIf="troca.notes">
+            <div class="observacoes-header">
+              <i class="material-icons">info</i>
+              <h4>Observações</h4>
+            </div>
+            <p>{{ troca.notes }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

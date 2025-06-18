@@ -1,0 +1,43 @@
+<nav>
+  <div class="logo-container">
+    <img src="assets/logo_comvoz.jpg" alt="Logo ComVoz" class="logo">
+  </div>
+
+  <ul class="sidebar-menu">
+    <li *ngFor="let item of menuItems" 
+        [class.active]="router.url === item.route"
+        [class.expanded]="expandedMenu === item.label"
+        [class.admin-item]="item.label === 'Admin Planos'"
+        [style.display]="item.label === 'Admin Planos' && !isAdmin ? 'none' : 'block'"
+        (click)="selectItem(item)">
+      <div class="menu-item">
+        <i class="material-icons">{{ item.icon }}</i>
+        <span>{{ item.label }}</span>
+        <i *ngIf="item.subItems" class="material-icons expand-icon">
+          {{ expandedMenu === item.label ? 'expand_less' : 'expand_more' }}
+        </i>
+      </div>
+
+      <ul *ngIf="item.subItems && expandedMenu === item.label" class="submenu">
+        <li *ngFor="let subItem of item.subItems" 
+            [class.active]="router.url === subItem.route"
+            (click)="selectItem(subItem, $event)">
+          <div class="menu-item">
+            <i class="material-icons">{{ subItem.icon }}</i>
+            <span>{{ subItem.label }}</span>
+          </div>
+        </li>
+      </ul>
+    </li>
+  </ul>
+
+  <div class="user-profile">
+    <div class="user-info">
+      <h4 class="user-name">{{ userName }}</h4>
+      <p class="user-role">{{ userRole }}</p>
+    </div>
+    <button class="logout-button" (click)="logout()" title="Sair">
+      <i class="material-icons">logout</i>
+    </button>
+  </div>
+</nav>

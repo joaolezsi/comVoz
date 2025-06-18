@@ -1,0 +1,274 @@
+.responder-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f5f7fa;
+  padding: 20px;
+  font-family: 'Roboto', Arial, sans-serif;
+}
+
+.form-container {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 800px;
+  padding: 30px;
+  margin: 20px auto;
+  font-family: 'Roboto', Arial, sans-serif;
+}
+
+.form-header {
+  text-align: center;
+  margin-bottom: 30px;
+  
+  h1 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .form-description {
+    color: #666;
+    font-size: 16px;
+  }
+}
+
+.form-group {
+  margin-bottom: 20px;
+  
+  h2 {
+    font-size: 20px;
+    margin-bottom: 5px;
+    color: #333;
+  }
+  
+  .form-subtitle {
+    color: #666;
+    margin-bottom: 20px;
+    font-size: 14px;
+  }
+  
+  label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: #444;
+  }
+  
+  .form-control {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+    
+    &:focus {
+      outline: none;
+      border-color: #2563EB;
+      box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+    }
+    
+    &.invalid {
+      border-color: #dc2626;
+    }
+  }
+  
+  .error-hint {
+    color: #dc2626;
+    font-size: 14px;
+    margin-top: 5px;
+  }
+}
+
+.perguntas-container {
+  margin-top: 40px;
+  
+  h2 {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 20px;
+  }
+}
+
+.pergunta {
+  background-color: #f8fafc;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  display: block !important;
+  
+  .pergunta-header {
+    margin-bottom: 15px;
+    
+    h3 {
+      font-size: 16px;
+      color: #333;
+      margin: 0;
+    }
+  }
+}
+
+.nps-container {
+  .nps-scale {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .nps-options {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .nps-option {
+    width: 40px;
+    height: 40px;
+    border: 2px solid #e2e8f0;
+    border-radius: 50%;
+    background: white;
+    color: #64748b;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    
+    &:hover {
+      border-color: #2563EB;
+      color: #2563EB;
+    }
+    
+    &.selected {
+      background-color: #2563EB;
+      border-color: #2563EB;
+      color: white;
+    }
+  }
+  
+  .nps-labels {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    color: #64748b;
+    font-size: 14px;
+  }
+}
+
+.escolha-container {
+  .opcoes {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .opcao {
+    padding: 12px 16px;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    background: white;
+    color: #64748b;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: left;
+    
+    &:hover {
+      border-color: #2563EB;
+      color: #2563EB;
+    }
+    
+    &.selected {
+      background-color: #2563EB;
+      border-color: #2563EB;
+      color: white;
+    }
+  }
+}
+
+.texto-container {
+  .texto-resposta {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    font-size: 14px;
+    resize: vertical;
+    min-height: 100px;
+    
+    &:focus {
+      outline: none;
+      border-color: #2563EB;
+      box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+    }
+  }
+}
+
+.form-actions {
+  margin-top: 30px;
+  text-align: center;
+  
+  .btn-submit {
+    background-color: #2563EB;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    
+    &:hover {
+      background-color: #1d4ed8;
+    }
+    
+    &:disabled {
+      background-color: #93c5fd;
+      cursor: not-allowed;
+    }
+  }
+}
+
+.loading-message,
+.error-message,
+.status-message,
+.success-message {
+  text-align: center;
+  padding: 20px;
+  
+  p {
+    margin: 0;
+  }
+}
+
+.loading-message {
+  color: #666;
+}
+
+.error-message {
+  color: #dc2626;
+}
+
+.status-message {
+  color: #2563EB;
+  margin: 10px 0;
+}
+
+.success-message {
+  color: #16a34a;
+  
+  .success-icon {
+    font-size: 50px;
+    margin-bottom: 15px;
+  }
+  
+  h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #16a34a;
+  }
+} 

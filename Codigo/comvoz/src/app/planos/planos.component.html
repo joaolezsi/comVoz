@@ -1,0 +1,88 @@
+<div *ngIf="enviandoInteresse" class="loading-overlay">
+  <div class="loading-spinner"></div>
+  <span class="loading-text">Registrando interesse...</span>
+</div>
+
+<div class="planos-container">
+  <div class="header">
+    <h1>Nossos Planos</h1>
+    <p class="subtitle">Escolha o plano ideal para sua empresa</p>
+  </div>
+  
+  <div *ngIf="carregando" class="loading">
+    <div class="spinner"></div>
+    <p>Carregando planos disponíveis...</p>
+  </div>
+  
+  <div *ngIf="erroCarregamento && !carregando" class="error-message">
+    <div class="alert alert-danger">
+      <i class="material-icons">error</i>
+      {{ erroCarregamento }}
+    </div>
+  </div>
+  
+  <div *ngIf="!carregando && !erroCarregamento" class="planos-grid">
+    <div *ngFor="let plano of planos" class="plano-card" 
+         [class.plano-atual]="isPlanoAtual(plano.id)"
+         [class.plano-interesse]="isInteresseRegistrado(plano.id)">
+      <div class="plano-header">
+        <div class="plano-tag" *ngIf="isPlanoAtual(plano.id)">Seu plano atual</div>
+        <div class="plano-tag interesse" *ngIf="isInteresseRegistrado(plano.id)">Interesse registrado</div>
+        <h2>{{ plano.nome }}</h2>
+        <div class="plano-preco">
+          <span class="preco-valor">{{ plano.preco }}</span>
+        </div>
+      </div>
+      
+      <div class="plano-features">
+        <ul>
+          <li *ngFor="let item of plano.itens">
+            <span class="feature-name">{{ item.descricao }}</span>
+            <span class="feature-value" [class.feature-positive]="item.valor === '✓'" [class.feature-negative]="item.valor === '✗'">
+              {{ item.valor }}
+            </span>
+          </li>
+        </ul>
+      </div>
+      
+      <div class="plano-footer">
+        <button 
+          class="btn-selecionar" 
+          [disabled]="isBotaoDesabilitado(plano.id)"
+          (click)="selecionarPlano(plano.id)"
+          [class.btn-atual]="isPlanoAtual(plano.id)"
+          [class.btn-interesse]="isInteresseRegistrado(plano.id)">
+          {{ isPlanoAtual(plano.id) ? 'Plano Atual' : 
+             isInteresseRegistrado(plano.id) ? 'Interesse Registrado' :
+             plano.id === 1 ? 'Plano Gratuito' : 
+             planoInteresseId !== null ? 'Indisponível' : 'Demonstrar Interesse' }}
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <div class="info-section">
+    <h3>Por que escolher a ComVoz?</h3>
+    <p>Nossa plataforma oferece soluções completas para pesquisas de satisfação, permitindo que você colete feedback valioso dos seus clientes de maneira eficiente e organizada.</p>
+    
+    <div class="beneficios">
+      <div class="beneficio">
+        <i class="material-icons">insights</i>
+        <h4>Dados Confiáveis</h4>
+        <p>Obtenha insights valiosos através de nossas pesquisas estruturadas e análises detalhadas.</p>
+      </div>
+      
+      <div class="beneficio">
+        <i class="material-icons">speed</i>
+        <h4>Resultados Rápidos</h4>
+        <p>Visualize os resultados em tempo real e tome decisões baseadas em dados atualizados.</p>
+      </div>
+      
+      <div class="beneficio">
+        <i class="material-icons">support_agent</i>
+        <h4>Suporte Especializado</h4>
+        <p>Nossa equipe de especialistas está sempre disponível para ajudar com suas pesquisas.</p>
+      </div>
+    </div>
+  </div>
+</div>
